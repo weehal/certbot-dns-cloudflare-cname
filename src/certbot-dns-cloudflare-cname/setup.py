@@ -30,7 +30,7 @@ setup(
     name='certbot-dns-cloudflare-cname',
     version=version,
     description="Cloudflare DNS Authenticator plugin for Certbot with CNAME support.",
-    url='https://github.com/certbot/certbot',
+    url='https://github.com/rsc-dev/certbot-dns-cloudflare-cname',
     author="Radoslaw Matusiak",
     author_email='radoslaw.matusiak@gmail.com',
     license='Apache License 2.0',
