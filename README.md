@@ -6,7 +6,11 @@ It supports [DNS-01 challenge](https://letsencrypt.org/docs/challenge-types/#dns
 It is based on official [Certbot Cloudflare plugin](https://github.com/certbot/certbot/tree/master/certbot-dns-cloudflare) ([documentation](https://certbot-dns-cloudflare.readthedocs.io/en/stable/)).
 
 ## Installation ##
-TODO
+### PyPI
+[PyPI link](https://pypi.org/project/certbot-dns-cloudflare-cname/).
+```bash
+pip install certbot-dns-cloudflare-cname
+```
 
 
 
