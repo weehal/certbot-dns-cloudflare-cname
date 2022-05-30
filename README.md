@@ -1,4 +1,5 @@
 # certbot-dns-cloudflare-cname
+[![PyPI version](https://badge.fury.io/py/certbot-dns-cloudflare-cname.svg)](https://badge.fury.io/py/certbot-dns-cloudflare-cname)
 ![CodeQL](https://github.com/rsc-dev/certbot-dns-cloudflare-cname/workflows/CodeQL/badge.svg)
 
 Cloudflare DNS Authenticator plugin for Certbot with support for CNAME aliasing.  
