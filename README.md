@@ -24,12 +24,25 @@ snap connect certbot-dns-cloudflare-cname:certbot-metadata certbot:certbot-metad
 pip install certbot-dns-cloudflare-cname
 ```
 
+## Configuration
 
+Example credentials file using restricted API Token (recommended):
+```
+# Cloudflare API token used by Certbot
+dns_cloudflare_cname_api_token = 0123456789abcdef0123456789abcdef01234567
+```
+
+Example credentials file using Global API Key (not recommended):
+```
+# Cloudflare API credentials used by Certbot
+dns_cloudflare_cname_email = cloudflare@example.com
+dns_cloudflare_cname_api_key = 0123456789abcdef0123456789abcdef01234
+```
 
 ## Command Line Options ##
 Argument | Description
 -|-
---dns-cloudflare-cname-credentials | Cloudflare [credentials](https://certbot-dns-cloudflare.readthedocs.io/en/stable/#credentials) INI file. (Required)
+--dns-cloudflare-cname-credentials | Cloudflare (See [Configuration](https://github.com/rsc-dev/certbot-dns-cloudflare-cname#Configuration)) INI file. (Required)
 --dns-cloudflare-cname-follow-cnames | If true, authenticator will try to resolve validation name. (Default: true)
 --dns-cloudflare-cname-propagation-seconds | The number of seconds to wait for DNS to propagate before asking the ACME server to verify the DNS record. (Default: 10)
 
