@@ -8,8 +8,18 @@ It supports [DNS-01 challenge](https://letsencrypt.org/docs/challenge-types/#dns
 It is based on official [Certbot Cloudflare plugin](https://github.com/certbot/certbot/tree/master/certbot-dns-cloudflare) ([documentation](https://certbot-dns-cloudflare.readthedocs.io/en/stable/)).
 
 ## Installation ##
+### SNAP
+
+[SNAP link](https://snapcraft.io/certbot-dns-cloudflare-cname)
+```bash
+snap install certbot-dns-cloudflare-cname
+snap set certbot trust-plugin-with-root=ok
+snap connect certbot:plugin certbot-dns-cloudflare-cname
+snap connect certbot-dns-cloudflare-cname:certbot-metadata certbot:certbot-metadata
+```
+
 ### PyPI
-[PyPI link](https://pypi.org/project/certbot-dns-cloudflare-cname/).
+[PyPI link](https://pypi.org/project/certbot-dns-cloudflare-cname/)
 ```bash
 pip install certbot-dns-cloudflare-cname
 ```
