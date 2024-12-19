@@ -38,7 +38,7 @@ class Authenticator(dns_common.DNSAuthenticator):
                              default_propagation_seconds: int = 10) -> None:
         super().add_parser_arguments(add, default_propagation_seconds)
         add('credentials', help='Cloudflare credentials INI file.')
-        add('follow-cnames', help='Support _acme-challange delegation via CNAME.',
+        add('follow-cnames', help='Support _acme-challenge delegation via CNAME.',
             default='true')
 
     def more_info(self) -> str:
@@ -49,7 +49,6 @@ class Authenticator(dns_common.DNSAuthenticator):
         token = credentials.conf('api-token')
         email = credentials.conf('email')
         key = credentials.conf('api-key')
-
         if token:
             if email or key:
                 raise errors.PluginError('{}: dns_cloudflare_email and dns_cloudflare_api_key are '
@@ -94,8 +93,9 @@ class Authenticator(dns_common.DNSAuthenticator):
         if not self.credentials:  # pragma: no cover
             raise errors.Error("Plugin has not been prepared.")
         if self.credentials.conf('api-token'):
-            return _CloudflareClient(None, self.credentials.conf('api-token'))
-        return _CloudflareClient(self.credentials.conf('email'), self.credentials.conf('api-key'))
+            return _CloudflareClient(api_token = self.credentials.conf('api-token'))
+        return _CloudflareClient(email = self.credentials.conf('email'),
+                                 api_key = self.credentials.conf('api-key'))
 
     def _resolve_cname_aliasing(self, domain: str, validation_name: str) -> str:
         """
@@ -145,8 +145,19 @@ class _CloudflareClient:
     Encapsulates all communication with the Cloudflare API.
     """
 
-    def __init__(self, email: Optional[str], api_key: str) -> None:
-        self.cf = CloudFlare.CloudFlare(email, api_key)
+    def __init__(self, email: Optional[str] = None, api_key: Optional[str] = None,
+                 api_token: Optional[str] = None) -> None:
+        if email:
+            # If an email was specified, we're using an email/key combination and not a token.
+            # We can't use named arguments in this case, as it would break compatibility with
+            # the Cloudflare library since version 2.10.1, as the `token` argument was used for
+            # tokens and keys alike and the `key` argument did not exist in earlier versions.
+            self.cf = CloudFlare.CloudFlare(email, api_key)
+        else:
+            # If no email was specified, we're using just a token. Let's use the named argument
+            # for simplicity, which is compatible with all (current) versions of the Cloudflare
+            # library.
+            self.cf = CloudFlare.CloudFlare(token=api_token)
 
     def add_txt_record(self, domain: str, record_name: str, record_content: str,
                        record_ttl: int) -> None:
